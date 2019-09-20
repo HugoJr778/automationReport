@@ -12,8 +12,19 @@ public class Report {
 	private static List<CellStyle> styleCell = new ArrayList<CellStyle>(12);
 	private static List<String> valuesReport = new ArrayList<String>(12);
 	private static List<String> listOK = new ArrayList<String>();
+	public static List<String> oks = new ArrayList<String>();
 	private static int lineWBNOK = 0;
 	private static int lineWBOK = 0;
+	
+
+	public static String getOks(int index) {
+		return (index > oks.size()) ? "<<< POSITION INVALID >>>" : oks.get(index);
+	}
+
+	public static void addOks(String value) {
+		oks.add(value);
+		System.out.println(oks);
+	}
 	
 	public static List<String> getListOK() {
 		return listOK;

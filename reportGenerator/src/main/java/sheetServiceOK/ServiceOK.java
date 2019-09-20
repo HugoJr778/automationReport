@@ -84,6 +84,10 @@ public class ServiceOK extends Report {
 		Cell error = row.createCell(8); // CELL --> 8
 		error.setCellValue(getValuesReport(12));
 		error.setCellStyle(dataStyleCell(StyleFormatCell.BORDER, wb));
+		
+		Report.addOks(getValuesReport(0) + ";" + getValuesReport(3) + ";" + getValuesReport(4) + ";" + getValuesReport(5) + ";" + 
+					  getValuesReport(11) + ";" + getValuesReport(6) + ";" + getValuesReport(12) + ";" + getValuesReport(8) + ";" + 
+					  getValuesReport(9) + ";" + getValuesReport(10));
 	}
 
 	public static boolean verifyContentWorkbookOK(HashMap<String, String> dct) {

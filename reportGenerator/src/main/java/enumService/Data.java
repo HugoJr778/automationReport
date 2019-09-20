@@ -11,10 +11,17 @@ public enum Data {
 		}
 	},
 	
-	DATE {
+	HOUR {
 		@Override
 		public String dataReport() {
 			return hourDate[0];
+		}
+	},
+	
+	DATE {
+		@Override
+		public String dataReport() {
+			return hourDate[1];
 		}
 	};
 	

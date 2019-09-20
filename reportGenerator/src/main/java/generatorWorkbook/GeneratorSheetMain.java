@@ -1,4 +1,4 @@
-package workbookMain;
+package generatorWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
