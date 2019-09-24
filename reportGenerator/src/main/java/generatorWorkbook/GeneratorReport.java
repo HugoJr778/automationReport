@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
+import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -32,18 +34,13 @@ public class GeneratorReport {
 	
 	private void editingReport() {
 		
-		System.out.println("<<<<< FILE COPY! >>>>>");
+		System.out.println("<<<<< FILE 'RelatorioPorCenario.xlsx' IN: " + RunReport.WAY_FOLDER_REPORT + " -- COPIED! >>>>>");
 		System.out.println("<<<<< EDITING OK'S IN 'RelatorioPorCenario.xlsx' ON DATE " + dataReport(Data.DATE) + " >>>>>");
 		if(!fileCopyReport.exists()) {
 			System.err.println("<<< ERROR FILE NOT FOUND " + GeneratorReport.class + ">>>");
 			UtilReport.finish();
 		}
 		System.out.println("Open File 'RelatorioPorCenario.xlsx' -- " + new Date());
-		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>> SIZE: " + Report.getLineWBOK());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>> FILE WAY: " + fileCopyReport);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>> STRING[]: " + Report.oks);
-		
 		OutputStream os = null;
 		
 		try (InputStream fi = new FileInputStream(fileCopyReport);
@@ -54,15 +51,7 @@ public class GeneratorReport {
 				final int rowNum = UtilReport.searchID(planilha, Report.getListOK(posi));
 				String[] x = Report.getOks(posi).split(";");
 				
-				System.out.println(">>>>>>>>>>" + Report.getOks(posi));
-				for(int p = 0; p < x.length; p++) {
-					System.out.println(">>>>>> X VALUES -- " + x[p]);
-				}
-				
-				//Exception in thread "main" java.lang.IllegalArgumentException: Address of hyperlink must be a valid URI
-				
-//				CreationHelper helper = wb.getCreationHelper();
-				
+				//OTHER FIELDS
 				planilha.getRow(rowNum).getCell(2).setCellValue(x[0]);
 				planilha.getRow(rowNum).getCell(3).setCellValue(Double.parseDouble(x[1]));
 				planilha.getRow(rowNum).getCell(4).setCellValue(x[2]);
@@ -70,13 +59,21 @@ public class GeneratorReport {
 				planilha.getRow(rowNum).getCell(6).setCellValue(x[4]);
 				planilha.getRow(rowNum).getCell(7).setCellValue(x[5]);
 				planilha.getRow(rowNum).getCell(8).setCellValue(x[6]);
-//				Hyperlink link = helper.createHyperlink(HyperlinkType.FILE);
-//				link.setAddress(x[7]);
-				planilha.getRow(rowNum).getCell(10).setCellValue(x[7]);
 				planilha.getRow(rowNum).getCell(11).setCellValue(x[8]);
-//				Hyperlink link2 = helper.createHyperlink(HyperlinkType.FILE);
-//				link2.setAddress(x[9]);
+				
+				//AUDIO EVIDENCE
+				planilha.getRow(rowNum).getCell(10).setCellValue(x[7]);
+				Hyperlink linkAudio = wb.getCreationHelper().createHyperlink(HyperlinkType.FILE);
+				File eviAudio = new File(x[7]);
+				linkAudio.setAddress(eviAudio.toURI().toString());
+				planilha.getRow(rowNum).getCell(10).setHyperlink(linkAudio);
+				
+				//LOG EVIDENCE
 				planilha.getRow(rowNum).getCell(12).setCellValue(x[9]);
+				Hyperlink linkEvidencia = wb.getCreationHelper().createHyperlink(HyperlinkType.FILE);
+				File eviLog = new File(x[9]);
+				linkEvidencia.setAddress(eviLog.toURI().toString());
+				planilha.getRow(rowNum).getCell(12).setHyperlink(linkEvidencia);
 				
 				os = new FileOutputStream(fileCopyReport);
 				wb.write(os);

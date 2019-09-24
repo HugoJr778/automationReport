@@ -9,11 +9,11 @@ import utilsReport.UtilReport;
 public class RunReport {
 
 	//CAMINHO PARA AS PASTAS COM OS RELATÓRIOS
-	public static final String WAY_FOLDER_REPORT = "E:\\URA RELATÓRIOS\\SETEMBRO\\3_Semana_Setembro\\19.09.19";
+	public static final String WAY_FOLDER_REPORT = "E:\\URA RELATÓRIOS\\TESTE";
 	//CAMINHO PARA A PLANILHA DE MASSA
 	public static final String WAY_MASSA = "C:\\testes\\PlanilhaUra.xls";
 	//PASTAS EXISTENTES PARA O RELATÓRIO 
-	public static final String[] FOLDERS_SEARCH_INFO_TO_REPORT =  "Aux1;Aux2;Aux3".split(";");
+	public static final String[] FOLDERS_SEARCH_INFO_TO_REPORT =  "Aux1;Aux2;Hugo;Romulo".split(";");
 	
 	public static void main(String[] args) {
 		new GeneratorSheetMain(FOLDERS_SEARCH_INFO_TO_REPORT[0]);
