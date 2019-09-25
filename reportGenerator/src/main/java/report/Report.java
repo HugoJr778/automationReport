@@ -23,7 +23,6 @@ public class Report {
 
 	public static void addOks(String value) {
 		oks.add(value);
-		System.out.println(oks);
 	}
 	
 	public static List<String> getListOK() {

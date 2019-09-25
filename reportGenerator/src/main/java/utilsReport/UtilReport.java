@@ -138,7 +138,8 @@ public class UtilReport extends Report {
 						 + "■ RE_TEST ► " + Description.getReTest() + "\n"
 						 + "■ APPLICATION ► " + Description.getApplication() + "\n"
 						 + "■ SCENARIOS NOT AUTOMATED ► 287\n"
-						 + "■ SCENARIOS AUTOMATED ► 786\n"
+						 + "■ SCENARIOS AUTOMATED ► 786\n" 
+						 + "■ TIME EXECUTION ► " + (new SimpleDateFormat("mm").format(new Date(System.currentTimeMillis() - RunReport.timeExecution))) + " Minutes\n" 
 						 + "=====================================================================================================>>");
 	}
 }
