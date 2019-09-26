@@ -1,5 +1,7 @@
 package runnerReport;
 
+import java.io.File;
+
 import generatorWorkbook.GeneratorReport;
 import generatorWorkbook.GeneratorSheetMain;
 import sheetServiceNOK.SearchDataToReportNOK;
@@ -8,23 +10,20 @@ import utilsReport.UtilReport;
 
 public class RunReport {
 
-	//CAMINHO PARA AS PASTAS COM OS RELATÓRIOS
-	public static final String WAY_FOLDER_REPORT = "E:\\URA RELATÓRIOS\\SETEMBRO\\4_Semana_Setembro\\25.09.19\\TARDE";
-	//CAMINHO PARA A PLANILHA DE MASSA
+	public static final String WAY_FOLDER_REPORT = "E:\\URA RELATÓRIOS\\SETEMBRO\\4_Semana_Setembro\\TESTE";
 	public static final String WAY_MASSA = "C:\\testes\\PlanilhaUra.xls";
-	//PASTAS EXISTENTES PARA O RELATÓRIO 
-	public static final String[] FOLDERS_SEARCH_INFO_TO_REPORT =  "Aux1;Aux2;Romulo".split(";");
 	public static long timeExecution = System.currentTimeMillis();
 	
 	public static void main(String[] args) {
-		new GeneratorSheetMain(FOLDERS_SEARCH_INFO_TO_REPORT[0]);
+		final File[] FOLDERS_EXISTING = UtilReport.indentWay(null).listFiles();
+		new GeneratorSheetMain(FOLDERS_EXISTING[0].getName());
 		
-		for (int posi = 0; posi < FOLDERS_SEARCH_INFO_TO_REPORT.length; posi++) {
-			final int value = UtilReport.verifyExistsFolders(FOLDERS_SEARCH_INFO_TO_REPORT[posi]);
+		for (int posi = 0; posi < FOLDERS_EXISTING.length; posi++) {
+			final int value = UtilReport.returnsNumber(FOLDERS_EXISTING[posi].getName());
 
 			if (value != 0) {
-				new SearchDataToReportNOK(FOLDERS_SEARCH_INFO_TO_REPORT[posi]);
-				new SearchDataToReportOK(FOLDERS_SEARCH_INFO_TO_REPORT[posi], value);
+				new SearchDataToReportNOK(FOLDERS_EXISTING[posi].getName());
+				new SearchDataToReportOK(FOLDERS_EXISTING[posi].getName(), value);
 			} else 
 				break;
 		}

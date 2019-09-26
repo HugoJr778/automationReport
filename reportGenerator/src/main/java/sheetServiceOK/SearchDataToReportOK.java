@@ -35,7 +35,7 @@ public class SearchDataToReportOK implements FaceReportInfo {
 	
 	private final boolean verifyID(String currentId) {
 		boolean result = true;
-		if(posiFolder0 == 1 && (!currentId.contains("ID"))) {
+		if(posiFolder0 == 0 && (!currentId.contains("ID"))) {
 			Report.addListOK(currentId);
 			return result;
 		} else {

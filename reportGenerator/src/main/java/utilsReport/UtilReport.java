@@ -52,18 +52,16 @@ public class UtilReport extends Report {
 		}
 	}
 	
-	public static int verifyExistsFolders(String folder) {
-		File arq = indentWay(folder);
-		
-		if(arq.exists() && folder.contains("1")) {
+	public static int returnsNumber(String folder) {
+		if(folder.contains("1")) {
 			return dataReportMachine(DataMachines.HELP1);
-		} else if (arq.exists() && folder.contains("2")) {
+		} else if (folder.contains("2")) {
 			return dataReportMachine(DataMachines.HELP2);
-		} else if (arq.exists() && folder.contains("3")) {
+		} else if (folder.contains("3")) {
 			return dataReportMachine(DataMachines.HELP3);
-		} else if (arq.exists() && folder.contains("ug")) {
+		} else if (folder.contains("ug")) {
 			return dataReportMachine(DataMachines.MACHINEHUGO);
-		} else if (arq.exists() && folder.contains("mul")) {
+		} else if (folder.contains("mul")) {
 			return dataReportMachine(DataMachines.MACHINEROMULO);
 		} else {
 			return 0;
@@ -71,7 +69,7 @@ public class UtilReport extends Report {
 	}
 	
 	public static File indentWay(String arqWay) {
-		return new File(RunReport.WAY_FOLDER_REPORT + "\\" + arqWay);
+		return ((arqWay == null || arqWay.isEmpty()) ? new File(RunReport.WAY_FOLDER_REPORT) : new File(RunReport.WAY_FOLDER_REPORT + "\\" + arqWay));
 	} 
 	
 	public static void finish() {
