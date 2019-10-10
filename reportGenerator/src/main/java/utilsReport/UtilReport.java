@@ -105,6 +105,7 @@ public class UtilReport extends Report {
 		try (FileChannel sourceOfc = new FileInputStream(source).getChannel();
 				FileChannel destinationCopy = new FileOutputStream(destination).getChannel()) {
 			sourceOfc.transferTo(0, sourceOfc.size(), destinationCopy);
+			System.out.println("<<<<< FILE '" + source.getName() + "' COPIED IN: " + RunReport.WAY_FOLDER_REPORT + " >>>>>");
 		} catch (FileNotFoundException e) {
 			System.err.println(e.getMessage() + "\n" + e);
 		} catch (IOException e) {
@@ -123,9 +124,23 @@ public class UtilReport extends Report {
 		}
 		return rowNumber;
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(formatALM());
+	}
+	
+	public static String formatALM() {
+		String[] date = date(null, "dd.MM.yy").split(";");
+		if(RunReport.WAY_FOLDER_REPORT.contains(date[0])) {
+			return RunReport.WAY_FOLDER_REPORT.substring(0, (RunReport.WAY_FOLDER_REPORT.length() - date[0].length()));
+		} else {
+			return null;
+		}
+	}
 
 	public static void printDescription() {
 		System.out.println("<<<<< DESCRIPTION NOK'S AND OK'S >>>>>\n"
+						 + (Description.getAlmResult() != 0 ? "■ ALM RESULT ► " + Description.getAlmResult() + "\n" : "")
 						 + "■ OK'S ► " + Report.getListOK().size() + "\n"
 						 + "■ NOK'S TOTAL ► " + (786 - Report.getListOK().size()) + "\n"
 						 + "■ NOK'S REPORT ► " + (((Report.getLineWBNOK() - 1) > 786) ? "DUPLICATE NOK'S -- " + 

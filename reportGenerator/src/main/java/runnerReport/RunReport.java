@@ -2,6 +2,7 @@ package runnerReport;
 
 import java.io.File;
 
+import generatorWorkbook.ALM;
 import generatorWorkbook.GeneratorReport;
 import generatorWorkbook.GeneratorSheetMain;
 import sheetServiceNOK.SearchDataToReportNOK;
@@ -10,8 +11,9 @@ import utilsReport.UtilReport;
 
 public class RunReport {
 
-	public static final String WAY_FOLDER_REPORT = "E:\\URA RELATÓRIOS\\SETEMBRO\\4_Semana_Setembro\\TESTE";
+	public static final boolean GENERATE_ALM = false;
 	public static final String WAY_MASSA = "C:\\testes\\PlanilhaUra.xls";
+	public static final String WAY_FOLDER_REPORT = "D:\\URA RELATÓRIOS\\OUTUBRO\\2_Semana_Outubro\\10.10.19\\TARDE";
 	public static long timeExecution = System.currentTimeMillis();
 	
 	public static void main(String[] args) {
@@ -27,7 +29,9 @@ public class RunReport {
 			} else 
 				break;
 		}
-		new GeneratorReport();		
+		new GeneratorReport();
+		if(GENERATE_ALM)
+			new ALM().writeAlmResult();
 		UtilReport.printDescription();
 	}
 }

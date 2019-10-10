@@ -6,6 +6,7 @@ public class Description {
 	private static int environment = 0;
 	private static int reTest = 0;
 	private static int application  = 0;
+	private static int almResult = 0;
 	
 	public static int getPasta() {
 		return pasta;
@@ -30,5 +31,11 @@ public class Description {
 	}
 	public static void setApplication() {
 		application++;
+	}
+	public static int getAlmResult() {
+		return almResult;
+	}
+	public static void setAlmResult(int x) {
+		Description.almResult = x;
 	}
 }

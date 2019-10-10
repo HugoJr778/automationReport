@@ -24,7 +24,7 @@ public class GeneratorReport {
 	
 	public GeneratorReport() {
 		this.fileCopyReport = new File(RunReport.WAY_FOLDER_REPORT + "\\RelatorioPorCenario.xlsx");
-		UtilReport.copyFile(new File("E:\\URA RELATÓRIOS\\RelatorioPorCenario.xlsx"), this.fileCopyReport);
+		UtilReport.copyFile(new File("workbooks\\RelatorioPorCenario.xlsx"), this.fileCopyReport);
 		editingReport();
 	}
 	
@@ -34,7 +34,6 @@ public class GeneratorReport {
 	
 	private void editingReport() {
 		
-		System.out.println("<<<<< FILE 'RelatorioPorCenario.xlsx' IN: " + RunReport.WAY_FOLDER_REPORT + " -- COPIED! >>>>>");
 		System.out.println("<<<<< EDITING OK'S IN 'RelatorioPorCenario.xlsx' ON DATE " + dataReport(Data.DATE) + " >>>>>");
 		if(!fileCopyReport.exists()) {
 			System.err.println("<<< ERROR FILE NOT FOUND " + GeneratorReport.class + ">>>");
