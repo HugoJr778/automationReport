@@ -11,14 +11,14 @@ import utilsReport.UtilReport;
 
 public class RunReport {
 
-	public static final boolean GENERATE_ALM = false;
+	public static final boolean GENERATE_ALM = true;
 	public static final String WAY_MASSA = "C:\\testes\\PlanilhaUra.xls";
-	public static final String WAY_FOLDER_REPORT = "D:\\URA RELATÓRIOS\\OUTUBRO\\4_Semana_Outubro\\24.10.19";
+	public static final String WAY_FOLDER_REPORT = "D:\\URA RELATÓRIOS\\OUTUBRO\\4_Semana_Outubro\\25.10.19";
 	public static long timeExecution = System.currentTimeMillis();
 	
 	public static void main(String[] args) {
 		final File[] FOLDERS_EXISTING = UtilReport.indentWay(null).listFiles();
-		new GeneratorSheetMain(FOLDERS_EXISTING[0].getName());
+		new GeneratorSheetMain(FOLDERS_EXISTING[0].getName().contains("ALM") ? FOLDERS_EXISTING[1].getName() : FOLDERS_EXISTING[0].getName());
 		
 		for (int posi = 0; posi < FOLDERS_EXISTING.length; posi++) {
 			final int value = UtilReport.returnsNumber(FOLDERS_EXISTING[posi].getName());
