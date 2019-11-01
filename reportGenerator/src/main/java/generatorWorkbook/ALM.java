@@ -35,7 +35,6 @@ public class ALM {
 			
 			File arqAlm = new File(FOLDERS_EXISTING_ALM[posi].getAbsolutePath() + "\\ALM.xlsx");
 			System.out.println("READING FILE 'ALM.xlsx' IN FOLDER: " + FOLDERS_EXISTING_ALM[posi].getName());
-			System.out.println("SAVED!");
 			
 			try(XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(arqAlm))) {
 				XSSFSheet sheet = wb.getSheetAt(0);

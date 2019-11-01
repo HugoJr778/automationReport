@@ -11,9 +11,9 @@ import utilsReport.UtilReport;
 
 public class RunReport {
 
-	public static final boolean GENERATE_ALM = true;
+	public static final boolean GENERATE_ALM = false;
 	public static final String WAY_MASSA = "C:\\testes\\PlanilhaUra.xls";
-	public static final String WAY_FOLDER_REPORT = "D:\\URA RELATÓRIOS\\OUTUBRO\\4_Semana_Outubro\\25.10.19";
+	public static final String WAY_FOLDER_REPORT = "";
 	public static long timeExecution = System.currentTimeMillis();
 	
 	public static void main(String[] args) {
