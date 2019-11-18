@@ -1,8 +1,7 @@
-package utilsReport;
+package utils_report;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -15,12 +14,12 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import enumService.Data;
-import enumService.DataMachines;
+import enum_service.Data;
+import enum_service.DataMachines;
 import junit.framework.Assert;
 import report.Description;
 import report.Report;
-import runnerReport.RunReport;
+import runner.RunReport;
 
 public class UtilReport extends Report {
 	
@@ -69,7 +68,7 @@ public class UtilReport extends Report {
 	}
 	
 	public static File indentWay(String arqWay) {
-		return ((arqWay == null || arqWay.isEmpty()) ? new File(RunReport.WAY_FOLDER_REPORT) : new File(RunReport.WAY_FOLDER_REPORT + "\\" + arqWay));
+		return ((arqWay == null || arqWay.isEmpty()) ? new File(RunReport.WAY_FOLDER_REPORT) : new File(RunReport.WAY_FOLDER_REPORT, arqWay));
 	} 
 	
 	public static void finish() {
@@ -79,10 +78,7 @@ public class UtilReport extends Report {
 	public static XSSFWorkbook getWbMain() {
 		File arqReport = UtilReport.indentWay(dataReport(Data.FILE_REPORT_NAME));
 		try {
-			XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(arqReport));
-			return wb;
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage() + "\n" + e);
+			return new XSSFWorkbook(new FileInputStream(arqReport));
 		} catch (IOException e) {
 			System.err.println(e.getMessage() + "\n" + e);
 		}
@@ -106,8 +102,6 @@ public class UtilReport extends Report {
 				FileChannel destinationCopy = new FileOutputStream(destination).getChannel()) {
 			sourceOfc.transferTo(0, sourceOfc.size(), destinationCopy);
 			System.out.println("<<<<< FILE '" + source.getName() + "' COPIED IN: " + RunReport.WAY_FOLDER_REPORT + " >>>>>");
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage() + "\n" + e);
 		} catch (IOException e) {
 			System.err.println(e.getMessage() + "\n" + e);
 		} 
@@ -115,27 +109,14 @@ public class UtilReport extends Report {
 	
 	public static int searchID(XSSFSheet planilha, String id) {
 		int rowNumber = -1;
-		search: for (Row row : planilha) {
+		for (Row row : planilha) {
 			Cell cell = row.getCell(0);
-			if (cell.toString().trim().toUpperCase().equals(id)) {
+			if (cell.toString().trim().equals(id)) {
 				rowNumber = row.getRowNum();
-				break search;
+				break;
 			}
 		}
 		return rowNumber;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(formatALM());
-	}
-	
-	public static String formatALM() {
-		String[] date = date(null, "dd.MM.yy").split(";");
-		if(RunReport.WAY_FOLDER_REPORT.contains(date[0])) {
-			return RunReport.WAY_FOLDER_REPORT.substring(0, (RunReport.WAY_FOLDER_REPORT.length() - date[0].length()));
-		} else {
-			return null;
-		}
 	}
 
 	public static void printDescription() {
@@ -152,7 +133,7 @@ public class UtilReport extends Report {
 						 + "■ APPLICATION ► " + Description.getApplication() + "\n"
 						 + "■ SCENARIOS NOT AUTOMATED ► 287\n"
 						 + "■ SCENARIOS AUTOMATED ► 786\n" 
-						 + "■ TIME EXECUTION ► " + (new SimpleDateFormat("mm").format(new Date(System.currentTimeMillis() - RunReport.timeExecution))) + " Minutes\n" 
+						 + "■ TIME EXECUTION ► " + (new SimpleDateFormat("mm").format(new Date(System.currentTimeMillis() - RunReport.TIME_EXECUTION))) + " Minutes\n" 
 						 + "=====================================================================================================>>");
 	}
 }

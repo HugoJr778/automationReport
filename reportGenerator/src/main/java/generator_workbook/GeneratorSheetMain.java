@@ -1,8 +1,7 @@
-package generatorWorkbook;
+package generator_workbook;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
@@ -11,16 +10,17 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import enumService.Data;
+import enum_service.Data;
 import report.Report;
-import runnerReport.RunReport;
-import utilsReport.UtilReport;
+import runner.RunReport;
+import utils_report.UtilReport;
 
 public class GeneratorSheetMain {
 	
 	private File arqMain;
-	private final static String SHEET_NAME_NOK = "URA NOK";
-	private final static String SHEET_NAME_OK = "URA OK";
+	private static final String SHEET_NAME_NOK = "URA NOK";
+	private static final String SHEET_NAME_OK = "URA OK";
+	private static final String LINE = "=====================================================================================================>>";
 	private final int[] widthColuns = {
 									   15 * 170, //ID
 									   35 * 830, //Cenário
@@ -57,13 +57,11 @@ public class GeneratorSheetMain {
 	}
 
 	private void createWorkbook() {
-		
-		System.out.println("=====================================================================================================>>");
+		System.out.println(LINE);
 		System.out.println("Creating report file 'REPORT_URA' in: " + RunReport.WAY_FOLDER_REPORT + "...");
 		FileOutputStream out = null;
-		XSSFWorkbook workbook = new XSSFWorkbook();
 		
-		try {
+		try(XSSFWorkbook workbook = new XSSFWorkbook();) {
 			if(!arqMain.exists()) {
 				out = new FileOutputStream(arqMain);
 				workbook.createSheet(SHEET_NAME_NOK);
@@ -86,7 +84,7 @@ public class GeneratorSheetMain {
 				UtilReport.finish();
 			}
 			System.out.println("Created File 'REPORT_URA'!");
-			System.out.println("=====================================================================================================>>");
+			System.out.println(LINE);
 		} catch (IOException e) {
 			System.err.println(e.getMessage() + "\n" + e);
 			UtilReport.finish();
@@ -96,8 +94,6 @@ public class GeneratorSheetMain {
 					out.flush();
 					out.close();
 				}
-				if (workbook != null)
-					workbook.close();
 			} catch (IOException e) {
 				System.err.println(e.getMessage() + "\n" + e);
 				UtilReport.finish();
@@ -106,56 +102,39 @@ public class GeneratorSheetMain {
 	} 
 	
 	private void getHeadersWorkbook(String folderExisting) {
-		
-		XSSFWorkbook workInfo = null;
 		System.out.println("Open File 'RelatorioPorCenario.xlsx' in Folder --> " + folderExisting + " -- " + new Date());
-		
-		try {
+		try (XSSFWorkbook workInfo = new XSSFWorkbook(new FileInputStream(UtilReport.indentWay(folderExisting + "\\RelatorioPorCenario.xlsx")))) {
 			
-			workInfo = new XSSFWorkbook(new FileInputStream(UtilReport.indentWay(folderExisting + "\\RelatorioPorCenario.xlsx")));
 			XSSFSheet sheet = workInfo.getSheetAt(0);
-			
 			System.out.println("Reading File Info...");
 			
 			for(Row row : sheet) {
-				for(int posi = 0; posi < 13; posi++) {
+				int posi = 0;
+				while(posi < 13) {
 					Report.addValuesReport(row.getCell(posi).getStringCellValue());
 					Report.addStyleCell(row.getCell(posi).getCellStyle());
+					posi++;
 				}
-				break;
+				if(posi == 13)
+					break;
 			}
-			
 			System.out.println("Headers finds ------------------------------------------->");
 			Report.printValuesReport();
 			System.out.println("--------------------------------------------------------->");
-			
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage() + "\n" + e);
-			UtilReport.finish();
+			System.out.println("Close File 'RelatorioPorCenario.xlsx' in Folder --> " + folderExisting + " -- " + new Date());
+			System.out.println(LINE);
 		} catch (IOException e) {
 			System.err.println(e.getMessage() + "\n" + e);
 			UtilReport.finish();
-		} finally {
-			try {
-				if(workInfo != null) 
-					workInfo.close();
-					System.out.println("Close File 'RelatorioPorCenario.xlsx' in Folder --> " + folderExisting + " -- " + new Date());
-					System.out.println("=====================================================================================================>>");
-			} catch (IOException e) {
-				System.err.println(e.getMessage() + "\n" + e);
-				UtilReport.finish();
-			}
 		}
 	}
 	
 	private void writerHeaders() {
 		FileOutputStream outFile = null;
-		XSSFWorkbook wb = null;
+		File arqReport = UtilReport.indentWay(dataReport(Data.FILE_REPORT_NAME));
 		
-		try {
+		try(XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(arqReport))) {
 			System.out.println("Open file 'REPORT_URA' to Write Headers " + new Date());
-			File arqReport = UtilReport.indentWay(dataReport(Data.FILE_REPORT_NAME));
-			wb = new XSSFWorkbook(new FileInputStream(arqReport));
 			Row row = wb.getSheet(SHEET_NAME_NOK).createRow(0);
 			
 			System.out.println("Write Headers to File in Sheet '" + SHEET_NAME_NOK + "'...");
@@ -166,20 +145,16 @@ public class GeneratorSheetMain {
 			outFile = new FileOutputStream(RunReport.WAY_FOLDER_REPORT + "\\" + dataReport(Data.FILE_REPORT_NAME));
 			wb.write(outFile);
 			
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage() + "\n" + e); 	
 		} catch (IOException e) {
 			System.err.println(e.getMessage() + "\n" + e);	
 		} finally {
 			try {
 				if (outFile != null)
 					outFile.close();
-				if (wb != null)
-					wb.close();
 				Report.setLineWBNOK(1);
 				Report.setLineWBOK(1);
 				System.out.println("Close file 'REPORT_URA' " + new Date());
-				System.out.println("=====================================================================================================>>");
+				System.out.println(LINE);
 			} catch (IOException e) {
 				System.err.println(e.getMessage() + "\n" + e);
 			}

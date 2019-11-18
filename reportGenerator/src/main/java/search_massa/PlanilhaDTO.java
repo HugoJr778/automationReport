@@ -1,4 +1,4 @@
-package searchMassa;
+package search_massa;
 
 public class PlanilhaDTO {
 	

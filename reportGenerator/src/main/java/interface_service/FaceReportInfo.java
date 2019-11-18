@@ -1,6 +1,6 @@
-package interfaceService;
+package interface_service;
 
-import enumService.Data;
+import enum_service.Data;
 
 public interface FaceReportInfo {
 	

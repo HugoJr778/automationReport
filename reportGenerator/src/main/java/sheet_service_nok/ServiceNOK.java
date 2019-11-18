@@ -1,4 +1,4 @@
-package sheetServiceNOK;
+package sheet_service_nok;
 
 import java.util.HashMap;
 
@@ -7,11 +7,11 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import enumService.StyleFormatCell;
+import enum_service.StyleFormatCell;
 import report.Description;
 import report.Report;
-import searchMassa.PlanilhaDTO;
-import searchMassa.SearchInfoMassa;
+import search_massa.PlanilhaDTO;
+import search_massa.SearchInfoMassa;
 
 public class ServiceNOK extends Report {
 	

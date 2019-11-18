@@ -1,4 +1,4 @@
-package searchMassa;
+package search_massa;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,8 +9,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-import runnerReport.RunReport;
-import utilsReport.UtilReport;
+import runner.RunReport;
+import utils_report.UtilReport;
 
 public final class SearchInfoMassa {
 

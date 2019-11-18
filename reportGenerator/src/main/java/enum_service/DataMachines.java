@@ -1,4 +1,4 @@
-package enumService;
+package enum_service;
 
 public enum DataMachines {
 

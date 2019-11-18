@@ -1,6 +1,6 @@
-package enumService;
+package enum_service;
 
-import utilsReport.UtilReport;
+import utils_report.UtilReport;
 
 public enum Data {
 	

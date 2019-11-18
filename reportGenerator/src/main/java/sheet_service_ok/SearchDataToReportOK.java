@@ -1,4 +1,4 @@
-package sheetServiceNOK;
+package sheet_service_ok;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,39 +13,57 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import enumService.Data;
-import generatorWorkbook.GeneratorSheetMain;
-import interfaceService.FaceReportInfo;
+import enum_service.Data;
+import generator_workbook.GeneratorSheetMain;
+import interface_service.FaceReportInfo;
 import report.Report;
-import runnerReport.RunReport;
-import utilsReport.UtilReport;
+import runner.RunReport;
+import utils_report.UtilReport;
 
-public class SearchDataToReportNOK implements FaceReportInfo {
-	
+public class SearchDataToReportOK implements FaceReportInfo {
+
 	private final String NAME_FOLDER;
+	private int posiFolder0;
 	private final String[] LIST_HEADERS = {"id", "cenario", "status", "execucao", "json", "hostName", 
 			"tipoErro", "massa", "erro", "statusDev", "idLog", "dataHora", "eviLog"};
-
-	public SearchDataToReportNOK(String name) {
+	
+	public SearchDataToReportOK(String name, int posiFolder0) {
 		this.NAME_FOLDER = name;
+		this.posiFolder0 = posiFolder0;
 		searchDataReport();
+	}
+	
+	private final boolean verifyID(String currentId) {
+		boolean result = true;
+		if(posiFolder0 == 0 && (!currentId.contains("ID"))) {
+			Report.addListOK(currentId);
+			return result;
+		} else {
+			if(Report.getListOK().contains(currentId)) {
+				result = false;
+			}
+		}
+		if(result) 
+			Report.addListOK(currentId);
+		
+		return result;
 	}
 	
 	@Override
 	public String dataReport(Data data) {
 		return data.dataReport();
 	}
-	
+
 	@Override
 	public void searchDataReport() {
 		
-		System.out.println("<<<<< COLLECTING NOK'S FROM REPORT '" + NAME_FOLDER + "' >>>>>");
+		System.out.println("<<<<< COLLECTING OK'S FROM REPORT '" + NAME_FOLDER + "' >>>>>");
 		
 		System.out.println("=====================================================================================================>>");
 		System.out.println("Open File 'RelatorioPorCenario.xlsx' in Folder --> " + NAME_FOLDER + " -- " + new Date());
 		File arq = new File(RunReport.WAY_FOLDER_REPORT + "\\" + NAME_FOLDER + "\\" + "RelatorioPorCenario.xlsx");
 		if(!arq.exists()) {
-			System.err.println("<<<FILE WAS NOT FOUND, THE NAME MAY BE DIVERGENT " + SearchDataToReportNOK.class + ">>>");
+			System.err.println("<<<FILE WAS NOT FOUND, THE NAME MAY BE DIVERGENT " + SearchDataToReportOK.class + ">>>");
 			UtilReport.finish();
 		}
 		FileOutputStream outFile = null;
@@ -81,17 +99,19 @@ public class SearchDataToReportNOK implements FaceReportInfo {
 					}
 					dct.put(LIST_HEADERS[posi], value);
 				}
-				final boolean result = ServiceNOK.verifyContentWorkbookNOK(dct);
-				
+				final boolean result = ServiceOK.verifyContentWorkbookOK(dct);
+
 				if(result) {
-					wb = UtilReport.getWbMain();
-					XSSFSheet sheetMain = wb.getSheet(GeneratorSheetMain.getSheetNameNOK());
-					Row rowWrite = sheetMain.createRow(Report.getLineWBNOK());
-					System.out.println(NAME_FOLDER + " - NOK -- " + dct.get("id") + " -- WITRING...");
-					ServiceNOK.populateCellsNOK(rowWrite, wb);
-					Report.setLineWBNOK(1);
+					if(verifyID(dct.get("id"))) {
+						wb = UtilReport.getWbMain();
+						XSSFSheet sheetMain = wb.getSheet(GeneratorSheetMain.getSheetNameOK());
+						Row rowWrite = sheetMain.createRow(Report.getLineWBOK());
+						System.out.println(NAME_FOLDER + " - OK -- " + dct.get("id") + " -- WITRING...");
+						ServiceOK.populateCellsOK(rowWrite, wb);
+						Report.setLineWBOK(1);
+					}
 				} else {
-					System.out.println(NAME_FOLDER + " - NOK -- JUMPING SCENARIO " + dct.get("id") + "...");
+					System.out.println(NAME_FOLDER + " - OK -- JUMPING SCENARIO " + dct.get("id") + "...");
 					Report.clearValuesReport();
 				}
 				Report.clearValuesReport();

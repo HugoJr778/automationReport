@@ -1,4 +1,4 @@
-package generatorWorkbook;
+package generator_workbook;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,10 +13,10 @@ import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import enumService.Data;
+import enum_service.Data;
 import report.Report;
-import runnerReport.RunReport;
-import utilsReport.UtilReport;
+import runner.RunReport;
+import utils_report.UtilReport;
 
 public class GeneratorReport {
 	
