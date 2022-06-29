@@ -20,7 +20,7 @@
 	<!-- JUNIT -->
 	<junit.version>3.8.1</junit.version>
 	<!-- APACHE POI -->
-	<poi.version>3.17</poi.version>
+	<poi.version>4.1.1</poi.version>
 	<poi-ooxml.version>3.17</poi-ooxml.version>
 	<poi-ooxml-schemas.version>3.17</poi-ooxml-schemas.version>
 	<ooxml-schemas.version>1.3</ooxml-schemas.version>
